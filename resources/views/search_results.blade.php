@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>検索結果</title>
+    <style>
+        .pagination {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .pagination li {
+            display: inline-block;
+            margin-right: 5px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -26,7 +36,7 @@
         </form>
     </header>
     <h1>「{{ $keyword }}」で見つかったお店</h1>
-    <p>{{ count($restaurants) }}件のお店が見つかりました</p>
+    <p>{{ $count }}件のお店が見つかりました</p>
 
     @if($restaurants)
     <ul>
@@ -46,6 +56,9 @@
             </li>
         @endforeach
     </ul>
+    <div class="pagination">
+        {{ $restaurants->withPath('/restaurant-search-app/public/search')->withQueryString()->links() }}
+    </div>
     @elseif($error)
         <p>{{ $error }}</p>
     @else
