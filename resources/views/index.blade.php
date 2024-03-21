@@ -4,6 +4,94 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>レストラン検索</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #ffbd59;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            padding: 20px 0;
+            background-color: #ffde59;
+            position: absolute;
+            width: 100%;
+            top: 0;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            margin-left: 5%;
+        }
+        .search-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width:800px;
+            height: 300px;
+            background-color: #ffde59;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .input-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+        }
+        .input-item label {
+            margin-bottom: 10px;
+        }
+        .input-range,
+        .input-keyword {
+            display: flex;
+            flex-direction: column;
+            margin: 0 10px;
+        }
+        #range,
+        #keyword {
+            border: none;
+            width: 300px;
+            height: 40px;
+            padding: 0px 8px;
+            font-size: 16px;
+            border-radius: 10px;
+        }
+        .search-button {
+            width: 300px;
+            border: none;
+            background-color: #ff914d;
+            padding: 10px 20px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 20px;
+            border-radius: 10px;
+            margin-bottom: 45px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        .search-button:hover {
+            background-color: #ff7243;
+        }
+        footer {
+            text-align: center;
+            background-color: #ffde59;
+            padding: 10px 0;
+            position: absolute;
+            width: 100%;
+            bottom: 0;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        footer a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -11,19 +99,25 @@
             <h1>レストラン検索</h1>
         </a>
     </header>
-    <form action="{{ route('search') }}" method="get" id="search-form">
+    <form action="{{ route('search') }}" method="get" id="search-form" class="search-area">
         @csrf
-        <label for="range">検索範囲：</label>
-        <select id="range" name="range">
-            <option value="1">300m</option>
-            <option value="2">500m</option>
-            <option value="3" selected>1000m</option>
-            <option value="4">2000m</option>
-            <option value="5">3000m</option>
-        </select>
-        <label for="keyword">お探しのキーワード：</label>
-        <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン" required>
-        <button type="submit">検索</button>
+        <div class="input-item">
+            <div class="input-range">
+                <label for="range">検索範囲</label>
+                <select id="range" name="range">
+                    <option value="1">300m</option>
+                    <option value="2">500m</option>
+                    <option value="3" selected>1000m</option>
+                    <option value="4">2000m</option>
+                    <option value="5">3000m</option>
+                </select>
+            </div>
+            <div class="input-keyword">
+                <label for="keyword">お探しのキーワード</label>
+                <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン" required>
+            </div>
+        </div>
+        <button type="submit" class="search-button">検索</button>
     </form>
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
