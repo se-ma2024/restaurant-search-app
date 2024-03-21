@@ -21,6 +21,8 @@ class RestaurantController extends Controller
         try {
             $keyword = $request->input('keyword');
             $range = $request->input('range');
+            $latitude = $request->input('latitude');
+            $longitude = $request->input('longitude');
             $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
             $api_key = config('services.hotpepper.api_key');
             $params = [
@@ -30,6 +32,10 @@ class RestaurantController extends Controller
                 'count' => 100,
                 'format' => "json",
             ];
+            if ($latitude && $longitude) {
+                $params['lat'] = $latitude;
+                $params['lng'] = $longitude;
+            }
             $response = Http::get($apiEndpoint, $params);
             $restaurantsData = $response->json()['results']['shop'];
             Paginator::useBootstrap();
@@ -60,6 +66,7 @@ class RestaurantController extends Controller
     public function show($id, Request $request)
     {
         $keyword = $request->input('keyword');
+        $range = $request->input('range');
         $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
         $apiKey = config('services.hotpepper.api_key');
         $params = [
@@ -69,6 +76,6 @@ class RestaurantController extends Controller
         ];
         $response = Http::get($apiEndpoint, $params);
         $restaurant = $response->json()['results']['shop'][0];
-        return view('restaurant_detail', ['restaurant' => $restaurant, 'keyword' => $keyword]);
+        return view('restaurant_detail', ['restaurant' => $restaurant, 'keyword' => $keyword, 'range' => $range]);
     }
 };

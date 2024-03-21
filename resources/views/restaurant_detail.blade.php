@@ -16,7 +16,7 @@
             <select id="range" name="range">
                 <option value="1">300m</option>
                 <option value="2">500m</option>
-                <option value="3" selected>1000m</option>
+                <option value="3">1000m</option>
                 <option value="4">2000m</option>
                 <option value="5">3000m</option>
             </select>
@@ -32,5 +32,13 @@
         <p class="genre"><strong>ジャンル:</strong> {{ $restaurant['genre']['name'] }}</p>
         <p class="budget"><strong>予算:</strong> {{ $restaurant['budget']['name'] }}</p>
     </div>
+    <script>
+        const initialRange = "{{ $range }}";
+        window.onload = function() {
+            const rangeSelect = document.getElementById('range');
+            rangeSelect.value = initialRange;
+        };
+    </script>
+    <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
 </body>
 </html>

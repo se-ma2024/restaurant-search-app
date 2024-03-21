@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>レストラン検索</title>
-    <link rel="stylesheet" href="{{ asset('styles/index.css') }}">
 </head>
 <body>
     <header>
@@ -29,5 +28,6 @@
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
     </footer>
+    <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
 </body>
 </html>

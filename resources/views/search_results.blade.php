@@ -26,7 +26,7 @@
             <select id="range" name="range">
                 <option value="1">300m</option>
                 <option value="2">500m</option>
-                <option value="3" selected>1000m</option>
+                <option value="3">1000m</option>
                 <option value="4">2000m</option>
                 <option value="5">3000m</option>
             </select>
@@ -42,7 +42,7 @@
     <ul>
         @foreach($restaurants as $restaurant)
             <li>
-                <a href="{{ route('restaurant_detail', ['id' => $restaurant['id'], 'keyword' => $keyword]) }}" style="text-decoration: none; color: inherit;">
+                <a href="{{ route('restaurant_detail', ['id' => $restaurant['id'], 'keyword' => $keyword, 'range' => $range]) }}" style="text-decoration: none; color: inherit;">
                     <article class="restaurant-card">
                         <img src="{{ $restaurant['photo']['pc']['l'] }}" alt="{{ $restaurant['name'] }} Image">
                         <div class="info">
@@ -68,5 +68,13 @@
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
     </footer>
+    <script>
+        const initialRange = "{{ $range }}";
+        window.onload = function() {
+            const rangeSelect = document.getElementById('range');
+            rangeSelect.value = initialRange;
+        };
+    </script>
+    <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
 </body>
 </html>
