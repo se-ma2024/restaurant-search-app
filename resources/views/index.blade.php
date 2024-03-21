@@ -25,7 +25,7 @@
         }
         header h1 {
             margin: 0;
-            margin-left: 5%;
+            margin-left: 100px;
         }
         .search-area {
             display: flex;
@@ -35,7 +35,7 @@
             width:800px;
             height: 300px;
             background-color: #ffde59;
-            border-radius: 10px;
+            border-radius: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         .input-item {
