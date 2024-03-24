@@ -110,6 +110,23 @@
             box-shadow: 20px 20px 0 #ffbd59;
             margin-right: 20px;
         }
+        .back-button {
+            position: fixed;
+            bottom: 20px;
+            left: 40px;
+            padding: 10px 20px;
+            border: none;
+            background-color: #ff914d;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #ff7243;
+        }
     </style>
 </head>
 <body>
@@ -148,6 +165,7 @@
         </div>
         <h1>マップを挿入</h1>
     </div>
+    <button class="back-button" onclick="window.history.back()">戻る</button>
     <script>
         const initialRange = "{{ $range }}";
         window.onload = function() {
