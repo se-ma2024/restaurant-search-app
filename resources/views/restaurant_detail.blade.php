@@ -153,13 +153,13 @@
                 <p class="name_kana">{{ $restaurant['name_kana'] }}</p>
                 <h1 class="name">{{ $restaurant['name'] }}</h1>
                 <hr>
-                <p class="detail-title"><strong>営業時間</strong></p><p class="detail">{{ $restaurant['open'] }}</p>
-                <p class="detail-title"><strong>定休日</strong></p><p class="detail">{{ $restaurant['close'] }}</p>
-                <p class="detail-title"><strong>キャッチコピー</strong></p><p class="detail">{{ $restaurant['catch'] }}</p>
-                <p class="detail-title"><strong>ジャンル</strong></p><p class="detail">{{ $restaurant['genre']['name'] }}</p>
-                <p class="detail-title"><strong>予算</strong></p><p class="detail">{{ $restaurant['budget']['average'] }}</p>
-                <p class="detail-title"><strong>アクセス</strong></p><p class="detail">{{ $restaurant['access'] }}</p>
-                <p class="detail-title"><strong>住所</strong></p><p class="detail">{{ $restaurant['address'] }}</p>
+                <p class="detail-title"><strong>営業時間</strong></p><p class="detail">{{ ($restaurant['open']) ? $restaurant['open'] : 'データがありません' }}</p>
+                <p class="detail-title"><strong>定休日</strong></p><p class="detail">{{ ($restaurant['close']) ? $restaurant['close'] : 'データがありません'}}</p>
+                <p class="detail-title"><strong>キャッチコピー</strong></p><p class="detail">{{ ($restaurant['catch']) ? $restaurant['catch'] : 'データがありません' }}</p>
+                <p class="detail-title"><strong>ジャンル</strong></p><p class="detail">{{ ($restaurant['genre']['name']) ? $restaurant['genre']['name'] : 'データがありません' }}</p>
+                <p class="detail-title"><strong>予算</strong></p><p class="detail">{{ ($restaurant['budget']['average']) ? $restaurant['budget']['average'] : 'データがありません' }}</p>
+                <p class="detail-title"><strong>アクセス</strong></p><p class="detail">{{ ($restaurant['access']) ? $restaurant['access'] : 'データがありません' }}</p>
+                <p class="detail-title"><strong>住所</strong></p><p class="detail">{{ ($restaurant['address']) ? $restaurant['address'] : 'データがありません' }}</p>
             </div>
             <img src="{{ $restaurant['photo']['pc']['l'] }}" alt="{{ $restaurant['name'] }} Image">
         </div>

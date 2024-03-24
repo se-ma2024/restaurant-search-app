@@ -203,8 +203,8 @@
                             <img src="{{ $restaurant['photo']['pc']['l'] }}" alt="{{ $restaurant['name'] }} Image">
                             <h2>{{ $restaurant['name'] }}</h2>
                             <p class="access">{{ $restaurant['mobile_access'] }}</p>
-                            <p class="genre"><strong>ジャンル:</strong> {{ $restaurant['genre']['name'] }}</p>
-                            <p class="budget"><strong>予算:</strong> {{ $restaurant['budget']['name'] }}</p>
+                            <p class="genre"><strong>ジャンル:</strong> {{ ($restaurant['genre']['name']) ? $restaurant['genre']['name'] : 'データがありません' }}</p>
+                            <p class="budget"><strong>予算:</strong> {{ ($restaurant['budget']['name']) ? $restaurant['budget']['name'] : 'データがありません' }}</p>
                         </a>
                     </article>
                 @endforeach
