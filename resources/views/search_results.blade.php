@@ -128,14 +128,31 @@
             margin-top: 10px;
             font-size: 18px;
             text-align: center;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
         .restaurant-card p {
             margin: 5px 0;
             font-size: 14px;
             text-align: center;
         }
+        .detail-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .access {
+            margin-bottom: 20px;
+        }
+        .detail-group {
+            display: flex;
+            align-items: center;
+        }
+        .detail-group p {
+            margin-left: 10px;
+        } 
         .pagination {
-            
             text-align: center;
             font-size: 18px;
         }
@@ -202,9 +219,17 @@
                         <a href="{{ route('restaurant_detail', ['id' => $restaurant['id'], 'keyword' => $keyword, 'range' => $range]) }}" style="text-decoration: none; color: inherit;">
                             <img src="{{ $restaurant['photo']['pc']['l'] }}" alt="{{ $restaurant['name'] }} Image">
                             <h2>{{ $restaurant['name'] }}</h2>
-                            <p class="access">{{ $restaurant['mobile_access'] }}</p>
-                            <p class="genre"><strong>ジャンル:</strong> {{ ($restaurant['genre']['name']) ? $restaurant['genre']['name'] : 'データがありません' }}</p>
-                            <p class="budget"><strong>予算:</strong> {{ ($restaurant['budget']['name']) ? $restaurant['budget']['name'] : 'データがありません' }}</p>
+                            <div class="detail-area">
+                                <p class="access">{{ $restaurant['mobile_access'] }}</p>
+                                <div class="detail-group">
+                                    <p class="detail-title"><strong>ジャンル</strong></p>
+                                    <p class="detail">{{ ($restaurant['genre']['name']) ? $restaurant['genre']['name'] : 'データがありません' }}</p>
+                                </div>
+                                <div class="detail-group">
+                                    <p class="detail-title"><strong>予算</strong></p>
+                                    <p class="detail">{{ ($restaurant['budget']['name']) ? $restaurant['budget']['name'] : 'データがありません' }}</p>
+                                </div>
+                            </div>
                         </a>
                     </article>
                 @endforeach
