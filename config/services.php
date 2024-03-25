@@ -35,4 +35,8 @@ return [
         'api_key' => env('HOTPEPPER_API_kEY'),
     ],
 
+    'googlemap' => [
+        'api_key' => env('GOOGLE_MAP_API_KEY'),
+    ],
+
 ];

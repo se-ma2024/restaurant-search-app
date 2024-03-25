@@ -127,6 +127,17 @@
         .back-button:hover {
             background-color: #ff7243;
         }
+        #map {
+            width: calc(100% - 40px); /* マップの幅を調整 */
+            height: 400px;
+            margin: 20px; /* 上下左右に余白を追加 */
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .map-title {
+            margin-left: 20px;
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 <body>
@@ -163,7 +174,9 @@
             </div>
             <img src="{{ $restaurant['photo']['pc']['l'] }}" alt="{{ $restaurant['name'] }} Image">
         </div>
-        <h1>マップを挿入</h1>
+        <h2 class="map-title">地図</h2>
+        <hr>
+        <div id="map"></div>
     </div>
     <button class="back-button" onclick="window.history.back()">戻る</button>
     <script>
@@ -172,7 +185,44 @@
             const rangeSelect = document.getElementById('range');
             rangeSelect.value = initialRange;
         };
+
+
+        async function initMap() {
+            const mapElement = document.getElementById("map");
+            const restaurantLat = {{ $restaurant['lat'] }};
+            const restaurantLng = {{ $restaurant['lng'] }};
+            const position = { lat: restaurantLat, lng: restaurantLng };
+            const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+            const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
+                "marker",
+            );
+            const map = new Map(mapElement, {
+                zoom: 15,
+                center: position,
+            });
+            const markerTitle = "{{ $restaurant['name'] }}"
+            const marker = new google.maps.Marker({
+                map: map,
+                position: position,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+                title: markerTitle
+            });
+            const infoWindow = new InfoWindow();
+            marker.addListener("click", () => {
+                infoWindow.setContent(marker.getTitle());
+                infoWindow.open(map, marker);
+            });
+            function toggleBounce() {
+                if (marker.getAnimation() !== null) {
+                    marker.setAnimation(null);
+                } else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                }
+            }
+        }
     </script>
     <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.googlemap.api_key') }}&callback=initMap" async defer></script>
 </body>
 </html>
