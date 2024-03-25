@@ -143,7 +143,7 @@
                 <option value="4">2000m</option>
                 <option value="5">3000m</option>
             </select>
-            <input type="text" id="keyword" name="keyword" value="{{ $keyword }}" required>
+            <input type="text" id="keyword" name="keyword" value="{{ $keyword }}">
             <button type="submit" class="search-button">検索</button>
         </form>
     </header>

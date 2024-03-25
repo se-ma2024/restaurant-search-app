@@ -114,7 +114,7 @@
             </div>
             <div class="input-keyword">
                 <label for="keyword">お探しのキーワード</label>
-                <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン" required>
+                <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン">
             </div>
         </div>
         <button type="submit" class="search-button">検索</button>

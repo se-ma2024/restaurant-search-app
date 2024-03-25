@@ -203,13 +203,13 @@
                 <option value="4">2000m</option>
                 <option value="5">3000m</option>
             </select>
-            <input type="text" id="keyword" name="keyword" value="{{ $keyword }}" required>
+            <input type="text" id="keyword" name="keyword" value="{{ $keyword }}">
             <button type="submit" class="search-button">検索</button>
         </form>
     </header>
     <div class="main-body">
         <div class="search-info">
-            <h2>「{{ $keyword }}」で見つかったお店</h2>
+            <h2>「{{ ($keyword) ? $keyword : "近く" }}」で見つかったお店</h2>
             <h2>{{ $count }}件</h2>
         </div>
         <div class="search-results">
