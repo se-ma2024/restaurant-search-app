@@ -193,6 +193,7 @@
             const restaurantLng = {{ $restaurant['lng'] }};
             const position = { lat: restaurantLat, lng: restaurantLng };
             const { Map, InfoWindow } = await google.maps.importLibrary("maps");
+<<<<<<< HEAD
             const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
             const map = new Map(mapElement, {
                 zoom: 15,
@@ -203,6 +204,21 @@
             const marker = new AdvancedMarkerElement({
                 map: map,
                 position: position,
+=======
+            const { AdvancedMarkerElement, PinElement } = await google.maps.importLibrary(
+                "marker",
+            );
+            const map = new Map(mapElement, {
+                zoom: 15,
+                center: position,
+            });
+            const markerTitle = "{{ $restaurant['name'] }}"
+            const marker = new google.maps.Marker({
+                map: map,
+                position: position,
+                draggable: true,
+                animation: google.maps.Animation.DROP,
+>>>>>>> b36e079dcaf4b7290c88476f58860315c1a4c2da
                 title: markerTitle
             });
             const infoWindow = new InfoWindow();
@@ -210,11 +226,25 @@
                 infoWindow.setContent(marker.getTitle());
                 infoWindow.open(map, marker);
             });
+<<<<<<< HEAD
         }
     </script>
     <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.googlemap.api_key') }}&callback=initMap">
     </script>
+=======
+            function toggleBounce() {
+                if (marker.getAnimation() !== null) {
+                    marker.setAnimation(null);
+                } else {
+                    marker.setAnimation(google.maps.Animation.BOUNCE);
+                }
+            }
+        }
+    </script>
+    <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.googlemap.api_key') }}&callback=initMap" async defer></script>
+>>>>>>> b36e079dcaf4b7290c88476f58860315c1a4c2da
 </body>
 </html>
