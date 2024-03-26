@@ -32,3 +32,9 @@ document.getElementById('search-form').addEventListener('submit', function(event
     var formElement = event.target;
     addLocationToForm(formElement);
 });
+
+document.getElementById('pickUp-form').addEventListener('submit', function(event) {
+    event.preventDefault();
+    var formElement = event.target;
+    addLocationToForm(formElement);
+});

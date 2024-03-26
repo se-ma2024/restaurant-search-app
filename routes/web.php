@@ -18,4 +18,5 @@ use App\Http\Controllers\RestaurantController;
 // });
 Route::get('/', [RestaurantController::class, 'index'])->name('index');
 Route::get('/search', [RestaurantController::class, 'search'])->name('search');
+Route::get('/pickUp', [RestaurantController::class, 'pickUp'])->name('pickUp');
 Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurant_detail');

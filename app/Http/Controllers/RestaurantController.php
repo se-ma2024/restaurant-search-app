@@ -63,6 +63,28 @@ class RestaurantController extends Controller
         }
     }
 
+    public function pickUp(Request $request)
+    {
+        $latitude = $request->input('latitude');
+        $longitude = $request->input('longitude');
+        $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
+        $api_key = config('services.hotpepper.api_key');
+        $params = [
+            'key' => $api_key,
+            'count' => 100,
+            'format' => "json",
+        ];
+        if ($latitude && $longitude) {
+            $params['lat'] = $latitude;
+            $params['lng'] = $longitude;
+        }
+        $response = Http::get($apiEndpoint, $params);
+        $restaurants = $response->json()['results']['shop'];
+        $randomIndex = array_rand($restaurants);
+        $randomRestaurant = $restaurants[$randomIndex];
+        return view('restaurant_detail', ['restaurant' => $randomRestaurant, 'keyword' => null, 'range' => 3]);
+    }
+
     public function show($id, Request $request)
     {
         $keyword = $request->input('keyword');
