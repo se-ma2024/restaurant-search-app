@@ -28,9 +28,12 @@
             margin-left: 100px;
         }
         .form-area {
+            display: flex;
             flex-direction: column;
-            width:800px;
-            height: 300px;
+            align-items: center;
+            justify-content: center;
+            width: 800px;
+            height: 400px;
             background-color: #ffde59;
             border-radius: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -76,12 +79,26 @@
             cursor: pointer;
             font-size: 20px;
             border-radius: 10px;
-            margin: 20px 0px;
+            margin: 30px 0px 20px 0px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
         }
         .search-button:hover {
             background-color: #ff7243;
+        }
+        hr {
+            width: 90%;
+            height: 2px;
+            margin: 0;
+            background-color: #ffbd59;
+            border: none;
+        }
+        .tippy-box[data-theme='my-custom-theme'] {
+            background-color: #fff;
+            color: #000;
+        }
+        .tippy-box[data-theme='my-custom-theme'] .tippy-arrow {
+            color: #fff;
         }
         footer {
             text-align: center;
@@ -97,6 +114,8 @@
             text-decoration: none;
         }
     </style>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
 </head>
 <body>
     <header>
@@ -125,14 +144,16 @@
             </div>
             <button type="submit" class="search-button">検索</button>
         </form>
+        <hr>
         <form action="{{ route('pickUp') }}" method="get" id="pickUp-form" class="search-area">
             @csrf
-            <button type="submit" class="search-button">ピックアップ</button>
+            <button type="submit" class="search-button" id="pickUp-button">ピックアップ</button>
         </form>
     </div>
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
     </footer>
+    <script src="{{ asset('../resources/js/tippy.js') }}"></script>
     <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
 </body>
 </html>
