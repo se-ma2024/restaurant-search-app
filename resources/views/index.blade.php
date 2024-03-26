@@ -27,16 +27,19 @@
             margin: 0;
             margin-left: 100px;
         }
-        .search-area {
-            display: flex;
+        .form-area {
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
             width:800px;
             height: 300px;
             background-color: #ffde59;
             border-radius: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        .search-area {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
         }
         .input-item {
             display: flex;
@@ -45,6 +48,7 @@
             height: 100%;
         }
         .input-item label {
+            margin-top: 30px;
             margin-bottom: 10px;
         }
         .input-range,
@@ -59,6 +63,7 @@
             width: 300px;
             height: 40px;
             padding: 0px 8px;
+            margin-bottom: 10px;
             font-size: 16px;
             border-radius: 10px;
         }
@@ -71,7 +76,7 @@
             cursor: pointer;
             font-size: 20px;
             border-radius: 10px;
-            margin-bottom: 45px;
+            margin: 20px 0px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             transition: background-color 0.3s ease;
         }
@@ -99,26 +104,32 @@
             <h1>レストラン検索</h1>
         </a>
     </header>
-    <form action="{{ route('search') }}" method="get" id="search-form" class="search-area">
-        @csrf
-        <div class="input-item">
-            <div class="input-range">
-                <label for="range">検索範囲</label>
-                <select id="range" name="range">
-                    <option value="1">300m</option>
-                    <option value="2">500m</option>
-                    <option value="3" selected>1000m</option>
-                    <option value="4">2000m</option>
-                    <option value="5">3000m</option>
-                </select>
+    <div class="form-area">
+        <form action="{{ route('search') }}" method="get" id="search-form" class="search-area">
+            @csrf
+            <div class="input-item">
+                <div class="input-range">
+                    <label for="range">検索範囲</label>
+                    <select id="range" name="range">
+                        <option value="1">300m</option>
+                        <option value="2">500m</option>
+                        <option value="3" selected>1000m</option>
+                        <option value="4">2000m</option>
+                        <option value="5">3000m</option>
+                    </select>
+                </div>
+                <div class="input-keyword">
+                    <label for="keyword">お探しのキーワード</label>
+                    <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン">
+                </div>
             </div>
-            <div class="input-keyword">
-                <label for="keyword">お探しのキーワード</label>
-                <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン">
-            </div>
-        </div>
-        <button type="submit" class="search-button">検索</button>
-    </form>
+            <button type="submit" class="search-button">検索</button>
+        </form>
+        <form action="{{ route('pickUp') }}" method="get" id="pickUp-form" class="search-area">
+            @csrf
+            <button type="submit" class="search-button">ピックアップ</button>
+        </form>
+    </div>
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
     </footer>
