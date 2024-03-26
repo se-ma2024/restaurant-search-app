@@ -128,15 +128,40 @@
             background-color: #ff7243;
         }
         #map {
-            width: calc(100% - 40px); /* マップの幅を調整 */
+            width: calc(100% - 40px);
             height: 400px;
-            margin: 20px; /* 上下左右に余白を追加 */
+            margin: 20px;
             border-radius: 10px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
         }
         .map-title {
             margin-left: 20px;
             margin-bottom: 5px;
+        }
+        .toggle-content {
+            display: none;
+            margin: 0px 20px 10px 20px;
+        }
+        #toggle-button {
+            padding: 10px 20px;
+            font-size:20px;
+            font-weight: bold;
+            background-color: transparent;
+            color: #000;
+            border: none;
+            cursor: pointer;
+        }
+        #toggle-button:hover {
+            text-decoration: underline;
+        }
+        .page-link {
+            background-color: transparent;
+            color: #000;
+            border: none;
+            cursor: pointer;
+        }
+        .page-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -173,6 +198,36 @@
                 <p class="detail-title"><strong>住所</strong></p><p class="detail">{{ ($restaurant['address']) ? $restaurant['address'] : 'データがありません' }}</p>
             </div>
             <img src="{{ $restaurant['photo']['pc']['l'] }}" alt="{{ $restaurant['name'] }} Image">
+        </div>
+        <button id="toggle-button">詳細を表示/非表示</button>
+        <div class="toggle-content" id="toggle-content">
+            <hr>
+            <p class="detail-title"><strong>最大宴会収容人数</strong></p><p class="detail">{{ ($restaurant['party_capacity']) ? $restaurant['party_capacity'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>WiFi 有無</strong></p><p class="detail">{{ ($restaurant['wifi']) ? $restaurant['wifi'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>ウェディング･二次会</strong></p><p class="detail">{{ ($restaurant['wedding']) ? $restaurant['wedding'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>飲み放題</strong></p><p class="detail">{{ ($restaurant['free_drink']) ? $restaurant['free_drink'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>食べ放題</strong></p><p class="detail">{{ ($restaurant['free_food']) ? $restaurant['free_food'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>個室</strong></p><p class="detail">{{ ($restaurant['private_room']) ? $restaurant['private_room'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>掘りごたつ</strong></p><p class="detail">{{ ($restaurant['horigotatsu']) ? $restaurant['horigotatsu'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>座敷</strong></p><p class="detail">{{ ($restaurant['tatami']) ? $restaurant['tatami'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>カード可</strong></p><p class="detail">{{ ($restaurant['card']) ? $restaurant['card'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>禁煙席</strong></p><p class="detail">{{ ($restaurant['non_smoking']) ? $restaurant['non_smoking'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>貸切可</strong></p><p class="detail">{{ ($restaurant['charter']) ? $restaurant['charter'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>駐車場</strong></p><p class="detail">{{ ($restaurant['parking']) ? $restaurant['parking'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>バリアフリー</strong></p><p class="detail">{{ ($restaurant['barrier_free']) ? $restaurant['barrier_free'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>その他設備</strong></p><p class="detail">{{ ($restaurant['other_memo']) ? $restaurant['other_memo'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>ライブ・ショー</strong></p><p class="detail">{{ ($restaurant['show']) ? $restaurant['show'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>カラオケ</strong></p><p class="detail">{{ ($restaurant['karaoke']) ? $restaurant['karaoke'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>バンド演奏可</strong></p><p class="detail">{{ ($restaurant['band']) ? $restaurant['band'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>TV・プロジェクター</strong></p><p class="detail">{{ ($restaurant['tv']) ? $restaurant['tv'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>英語メニュー</strong></p><p class="detail">{{ ($restaurant['english']) ? $restaurant['english'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>ペット可</strong></p><p class="detail">{{ ($restaurant['pet']) ? $restaurant['pet'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>お子様連れ</strong></p><p class="detail">{{ ($restaurant['child']) ? $restaurant['child'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>ランチ</strong></p><p class="detail">{{ ($restaurant['lunch']) ? $restaurant['lunch'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>23時以降も営業</strong></p><p class="detail">{{ ($restaurant['lunch']) ? $restaurant['lunch'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>備考</strong></p><p class="detail">{{ ($restaurant['midnight']) ? $restaurant['midnight'] : 'データがありません' }}</p>
+            <p class="detail-title"><strong>TV・プロジェクター</strong></p><p class="detail">{{ ($restaurant['shop_detail_memo']) ? $restaurant['shop_detail_memo'] : 'データがありません' }}</p>
+            <a href="#" class="page-link">上へ移動</a>
         </div>
         <h2 class="map-title">地図</h2>
         <hr>
@@ -212,6 +267,7 @@
             });
         }
     </script>
+    <script src="{{ asset('../resources/js/toggle.js') }}"></script>
     <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.googlemap.api_key') }}&callback=initMap">
