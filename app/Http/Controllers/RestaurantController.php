@@ -65,39 +65,47 @@ class RestaurantController extends Controller
 
     public function pickUp(Request $request)
     {
-        $latitude = $request->input('latitude');
-        $longitude = $request->input('longitude');
-        $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
-        $api_key = config('services.hotpepper.api_key');
-        $params = [
-            'key' => $api_key,
-            'count' => 100,
-            'format' => "json",
-        ];
-        if ($latitude && $longitude) {
-            $params['lat'] = $latitude;
-            $params['lng'] = $longitude;
+        try {
+            $latitude = $request->input('latitude');
+            $longitude = $request->input('longitude');
+            $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
+            $api_key = config('services.hotpepper.api_key');
+            $params = [
+                'key' => $api_key,
+                'count' => 100,
+                'format' => "json",
+            ];
+            if ($latitude && $longitude) {
+                $params['lat'] = $latitude;
+                $params['lng'] = $longitude;
+            }
+            $response = Http::get($apiEndpoint, $params);
+            $restaurants = $response->json()['results']['shop'];
+            $randomIndex = array_rand($restaurants);
+            $randomRestaurant = $restaurants[$randomIndex];
+            return view('restaurant_detail', ['restaurant' => $randomRestaurant, 'keyword' => null, 'range' => 3]);
+        } catch (\Exception $e) {
+            Log::error('Error picking up restaurant: ' . $e->getMessage());
         }
-        $response = Http::get($apiEndpoint, $params);
-        $restaurants = $response->json()['results']['shop'];
-        $randomIndex = array_rand($restaurants);
-        $randomRestaurant = $restaurants[$randomIndex];
-        return view('restaurant_detail', ['restaurant' => $randomRestaurant, 'keyword' => null, 'range' => 3]);
     }
 
     public function show($id, Request $request)
     {
-        $keyword = $request->input('keyword');
-        $range = $request->input('range');
-        $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
-        $apiKey = config('services.hotpepper.api_key');
-        $params = [
-            'key' => $apiKey,
-            'id' => $id,
-            'format' => 'json',
-        ];
-        $response = Http::get($apiEndpoint, $params);
-        $restaurant = $response->json()['results']['shop'][0];
-        return view('restaurant_detail', ['restaurant' => $restaurant, 'keyword' => $keyword, 'range' => $range]);
+        try {
+            $keyword = $request->input('keyword');
+            $range = $request->input('range');
+            $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
+            $apiKey = config('services.hotpepper.api_key');
+            $params = [
+                'key' => $apiKey,
+                'id' => $id,
+                'format' => 'json',
+            ];
+            $response = Http::get($apiEndpoint, $params);
+            $restaurant = $response->json()['results']['shop'][0];
+            return view('restaurant_detail', ['restaurant' => $restaurant, 'keyword' => $keyword, 'range' => $range]);
+        } catch (\Exception $e) {
+            Log::error('Error fetching restaurant details: ' . $e->getMessage());
+        }
     }
 };
