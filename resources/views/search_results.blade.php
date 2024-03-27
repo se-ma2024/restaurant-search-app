@@ -253,6 +253,6 @@
             rangeSelect.value = initialRange;
         };
     </script>
-    <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
+    <script src="{{ asset('../resources/js/geolocation_header.js') }}"></script>
 </body>
 </html>

@@ -268,7 +268,7 @@
         }
     </script>
     <script src="{{ asset('../resources/js/toggle.js') }}"></script>
-    <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
+    <script src="{{ asset('../resources/js/geolocation_header.js') }}"></script>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.googlemap.api_key') }}&callback=initMap">
     </script>
