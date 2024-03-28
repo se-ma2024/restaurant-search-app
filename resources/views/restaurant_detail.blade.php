@@ -16,6 +16,9 @@
             min-height: 100vh;
         }
         header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding: 20px 0;
             background-color: #ffde59;
             position: absolute;
@@ -35,7 +38,6 @@
             display: flex;
             justify-content: center;
             height: 100%;
-            width: 100%;
             right: 0px;
         }
         #range,
@@ -61,6 +63,53 @@
         }
         .search-button:hover {
             background-color: #ff7243;
+        }
+        .account {
+            display: flex;
+            margin: 0;
+            margin-right: 50px;
+        }
+        .account-link {
+            text-decoration: none;
+            color: #333;
+            margin: 0px 10px;
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropdown .user {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #ff914d;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            display: none;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            z-index: 1000;
+            padding: 0;
+            margin: 0;
+        }
+        .dropdown-menu li {
+            list-style: none;
+        }
+        .dropdown-menu li a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            transition: background-color 0.3s ease;
+            padding: 20px 30px;
+        }
+        .dropdown-menu li a:hover {
+            background-color: #f0f0f0;
         }
         .main-content {
             width: 80%;
@@ -182,6 +231,25 @@
             <input type="text" id="keyword" name="keyword" value="{{ $keyword }}">
             <button type="submit" class="search-button">検索</button>
         </form>
+        <div class="account">
+            @if(Auth::check())
+            <div class="dropdown">
+                <a class="user" onclick="toggleDropdown('userDropdown')"> {{ Auth::user()->name }} さん</a>
+                <ul id="userDropdown" class="dropdown-menu" style="display: none;">
+                    <li><a href="#">保存済み</a></li>
+                    <li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                    </li>
+                </ul>
+            </div>
+            @else
+                <a class="account-link" href="{{ route('register') }}">会員登録</a>
+                <a class="account-link" href="{{ route('login') }}">ログイン</a>
+            @endif
+        </div>
     </header>
     <div class="main-content">
         <div class="restaurant-content">
@@ -267,7 +335,8 @@
             });
         }
     </script>
-    <script src="{{ asset('../resources/js/toggle.js') }}"></script>
+    <script src="{{ asset('../resources/js/toggle_account.js') }}"></script>
+    <script src="{{ asset('../resources/js/toggle_detail.js') }}"></script>
     <script src="{{ asset('../resources/js/geolocation_header.js') }}"></script>
     <script async
         src="https://maps.googleapis.com/maps/api/js?key={{ config('services.googlemap.api_key') }}&callback=initMap">
