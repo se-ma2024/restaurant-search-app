@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\RestaurantController;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
+use App\Models\Favorite;
 
 
 class RestaurantController extends Controller
@@ -107,5 +108,22 @@ class RestaurantController extends Controller
         } catch (\Exception $e) {
             Log::error('Error fetching restaurant details: ' . $e->getMessage());
         }
+    }
+
+    public function saved(Request $request, $restaurantId, $email)
+    {
+        $user = auth()->user();
+        $favorite = Favorite::where('restaurant_id', $restaurantId)->where('email', $email)->first();
+        
+        if ($favorite) {
+            $favorite->delete();
+        } else {
+            $favorite = new Favorite();
+            $favorite->email = $email;
+            $favorite->restaurant_id = $restaurantId;
+            $favorite->save();
+        }
+
+        return back();
     }
 };

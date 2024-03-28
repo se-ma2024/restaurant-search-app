@@ -254,6 +254,20 @@
     <div class="main-content">
         <div class="restaurant-content">
             <div class="info">
+                @if(Auth::check())
+                    @php
+                        $userEmail = Auth::user()->email;
+                        $isFavorite = \App\Models\Favorite::where('email', $userEmail)->where('restaurant_id', $restaurant['id'])->exists();
+                    @endphp
+                    <form action="{{ route('saved', ['restaurantId' => $restaurant['id'], 'email' => Auth::user()->email]) }}" method="POST">
+                        @csrf
+                        @if($isFavorite)
+                            <button type="submit" class="btn btn-primary">お気に入り削除</button>
+                        @else
+                            <button type="submit" class="btn btn-primary">お気に入り追加</button>
+                        @endif
+                    </form>
+                @endif
                 <p class="name_kana">{{ $restaurant['name_kana'] }}</p>
                 <h1 class="name">{{ $restaurant['name'] }}</h1>
                 <hr>
