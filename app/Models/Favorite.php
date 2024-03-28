@@ -10,7 +10,18 @@ class Favorite extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'email',
         'restaurant_id',
     ];
+
+    public static function toggleFavorite($restaurantId, $email)
+    {
+        $favorite = Favorite::where('restaurant_id', $restaurantId)->where('email', $email)->first();
+        
+        if ($favorite) {
+            $favorite->delete();
+        } else {
+            Favorite::create(['restaurant_id' => $restaurantId, 'email' => $email]);
+        }
+    }
 }

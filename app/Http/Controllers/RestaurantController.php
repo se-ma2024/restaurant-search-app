@@ -112,17 +112,7 @@ class RestaurantController extends Controller
 
     public function saved(Request $request, $restaurantId, $email)
     {
-        $user = auth()->user();
-        $favorite = Favorite::where('restaurant_id', $restaurantId)->where('email', $email)->first();
-        
-        if ($favorite) {
-            $favorite->delete();
-        } else {
-            $favorite = new Favorite();
-            $favorite->email = $email;
-            $favorite->restaurant_id = $restaurantId;
-            $favorite->save();
-        }
+        Favorite::toggleFavorite($restaurantId, $email);
 
         return back();
     }
