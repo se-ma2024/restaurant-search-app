@@ -120,7 +120,6 @@
             background-color: #ffde59;
             border-radius: 20px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            
         }
         .restaurant-content {
             display: flex;
@@ -131,6 +130,28 @@
         .info {
             flex: 2;
             padding-right: 20px;
+        }
+        .info-top {
+            display: flex;
+            align-items: center;
+        }
+        .star {
+            font-size: 36px;
+        }
+        .btn-favorite {
+            background: none;
+            border: none;
+            padding: 0;
+            font-size: 16px;
+            color: #333;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .btn-favorite:hover {
+            color: #ffbd59;
+        }
+        .btn-favorite-active {
+            color: #ffbd59;
         }
         .name_kana {
             margin-bottom: 0;
@@ -256,22 +277,30 @@
     <div class="main-content">
         <div class="restaurant-content">
             <div class="info">
-                @if(Auth::check())
-                    @php
-                        $user_id = Auth::user()->id;
-                        $isFavorite = \App\Models\Favorite::where('user_id', $user_id)->where('restaurant_id', $restaurant['id'])->exists();
-                    @endphp
-                    <form action="{{ route('saved', ['restaurantId' => $restaurant['id'], 'user_id' => Auth::user()->id]) }}" method="POST">
-                        @csrf
-                        @if($isFavorite)
-                            <button type="submit" class="btn btn-primary">お気に入り削除</button>
-                        @else
-                            <button type="submit" class="btn btn-primary">お気に入り追加</button>
-                        @endif
-                    </form>
-                @endif
-                <p class="name_kana">{{ $restaurant['name_kana'] }}</p>
-                <h1 class="name">{{ $restaurant['name'] }}</h1>
+                <div class="info-top">
+                    @if(Auth::check())
+                        @php
+                            $user_id = Auth::user()->id;
+                            $isFavorite = \App\Models\Favorite::where('user_id', $user_id)->where('restaurant_id', $restaurant['id'])->exists();
+                        @endphp
+                        <form action="{{ route('saved', ['restaurantId' => $restaurant['id'], 'user_id' => Auth::user()->id]) }}" method="POST">
+                            @csrf
+                            @if($isFavorite)
+                                <button type="submit" class="btn-favorite btn-favorite-active">
+                                    <span class="star">&#9733;</span>
+                                </button>
+                            @else
+                                <button type="submit" class="btn-favorite">
+                                    <span class="star">&#9734;</span>
+                                </button>
+                            @endif
+                        </form>
+                    @endif
+                    <div class="restaurant_name">
+                        <p class="name_kana">{{ $restaurant['name_kana'] }}</p>
+                        <h1 class="name">{{ $restaurant['name'] }}</h1>
+                    </div>
+                </div>
                 <hr>
                 <p class="detail-title"><strong>営業時間</strong></p><p class="detail">{{ ($restaurant['open']) ? $restaurant['open'] : 'データがありません' }}</p>
                 <p class="detail-title"><strong>定休日</strong></p><p class="detail">{{ ($restaurant['close']) ? $restaurant['close'] : 'データがありません'}}</p>
