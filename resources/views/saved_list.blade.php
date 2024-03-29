@@ -118,7 +118,6 @@
         }
         .page-title {
             position: relative;
-            margin: 100px auto 20px;
             text-align: center;
         }
         .search-results {

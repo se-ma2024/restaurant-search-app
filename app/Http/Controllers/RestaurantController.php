@@ -86,7 +86,7 @@ class RestaurantController extends Controller
             $randomRestaurant = $restaurants[$randomIndex];
             return view('restaurant_detail', ['restaurant' => $randomRestaurant, 'keyword' => null, 'range' => 3]);
         } catch (\Exception $e) {
-            Log::error('Error picking up restaurant: ' . $e->getMessage());
+            \Log::error('Error picking up restaurant: ' . $e->getMessage());
         }
     }
 
@@ -106,7 +106,7 @@ class RestaurantController extends Controller
             $restaurant = $response->json()['results']['shop'][0];
             return view('restaurant_detail', ['restaurant' => $restaurant, 'keyword' => $keyword, 'range' => $range]);
         } catch (\Exception $e) {
-            Log::error('Error fetching restaurant details: ' . $e->getMessage());
+            \Log::error('Error fetching restaurant details: ' . $e->getMessage());
         }
     }
 
@@ -119,24 +119,28 @@ class RestaurantController extends Controller
 
     public function savedList(Request $request)
     {
-        $user_id = Auth::user()->id;
-        $savedRestaurants = Favorite::getFavoriteRestaurantIds($user_id);
+        try {
+            $user_id = Auth::user()->id;
+            $savedRestaurants = Favorite::getFavoriteRestaurantIds($user_id);
 
-        $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
-        $apiKey = config('services.hotpepper.api_key');
-        $params = [
-            'key' => $apiKey,
-            'id' => $savedRestaurants->implode(','),
-            'format' => 'json',
-        ];
-        $response = Http::get($apiEndpoint, $params);
-        $restaurantsData = $response->json()['results']['shop'];
-        Paginator::useBootstrap();
-        $perPage = 10;
-        $currentPage = $request->input('page', 1);
-        $pagedData = array_slice($restaurantsData, ($currentPage - 1) * $perPage, $perPage);
-        $restaurants = new LengthAwarePaginator($pagedData, count($restaurantsData), $perPage, $currentPage);
+            $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
+            $apiKey = config('services.hotpepper.api_key');
+            $params = [
+                'key' => $apiKey,
+                'id' => $savedRestaurants->implode(','),
+                'format' => 'json',
+            ];
+            $response = Http::get($apiEndpoint, $params);
+            $restaurantsData = $response->json()['results']['shop'];
+            Paginator::useBootstrap();
+            $perPage = 10;
+            $currentPage = $request->input('page', 1);
+            $pagedData = array_slice($restaurantsData, ($currentPage - 1) * $perPage, $perPage);
+            $restaurants = new LengthAwarePaginator($pagedData, count($restaurantsData), $perPage, $currentPage);
 
-        return view('saved_list', ['restaurants' => $restaurants]);
+            return view('saved_list', ['restaurants' => $restaurants]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching favorite restaurant: ' . $e->getMessage());
+        }
     }
 };
