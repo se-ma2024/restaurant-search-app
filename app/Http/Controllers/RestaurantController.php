@@ -110,9 +110,9 @@ class RestaurantController extends Controller
         }
     }
 
-    public function saved(Request $request, $restaurantId, $email)
+    public function saved(Request $request, $restaurantId, $user_id)
     {
-        Favorite::toggleFavorite($restaurantId, $email);
+        Favorite::toggleFavorite($restaurantId, $user_id);
 
         return back();
     }

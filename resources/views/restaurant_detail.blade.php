@@ -256,10 +256,10 @@
             <div class="info">
                 @if(Auth::check())
                     @php
-                        $userEmail = Auth::user()->email;
-                        $isFavorite = \App\Models\Favorite::where('email', $userEmail)->where('restaurant_id', $restaurant['id'])->exists();
+                        $user_id = Auth::user()->id;
+                        $isFavorite = \App\Models\Favorite::where('user_id', $user_id)->where('restaurant_id', $restaurant['id'])->exists();
                     @endphp
-                    <form action="{{ route('saved', ['restaurantId' => $restaurant['id'], 'email' => Auth::user()->email]) }}" method="POST">
+                    <form action="{{ route('saved', ['restaurantId' => $restaurant['id'], 'user_id' => Auth::user()->id]) }}" method="POST">
                         @csrf
                         @if($isFavorite)
                             <button type="submit" class="btn btn-primary">お気に入り削除</button>
