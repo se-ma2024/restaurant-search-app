@@ -116,14 +116,10 @@
         .main-body {
             margin: 80px 20px 80px 20px;
         }
-        .search-info {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .search-info h2 {
-            font: inherit;
-            margin: 16px 16px 0px 16px;
+        .page-title {
+            position: relative;
+            margin: 100px auto 20px;
+            text-align: center;
         }
         .search-results {
             display: flex;
@@ -250,27 +246,27 @@
             <select id="range" name="range">
                 <option value="1">300m</option>
                 <option value="2">500m</option>
-                <option value="3">1000m</option>
+                <option value="3" selected>1000m</option>
                 <option value="4">2000m</option>
                 <option value="5">3000m</option>
             </select>
-            <input type="text" id="keyword" name="keyword" value="{{ $keyword }}">
+            <input type="text" id="keyword" name="keyword">
             <button type="submit" class="search-button">検索</button>
         </form>
         <div class="account">
-            @if(Auth::check())
-                <div class="dropdown">
-                    <a class="user" onclick="toggleDropdown('userDropdown')"> {{ Auth::user()->name }} さん</a>
-                    <ul id="userDropdown" class="dropdown-menu" style="display: none;">
-                        <li><a href="savedList">保存済み</a></li>
-                        <li>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                @csrf
-                            </form>
-                            <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
-                        </li>
-                    </ul>
-                </div>
+        @if(Auth::check())
+            <div class="dropdown">
+                <a class="user" onclick="toggleDropdown('userDropdown')"> {{ Auth::user()->name }} さん</a>
+                <ul id="userDropdown" class="dropdown-menu" style="display: none;">
+                    <li><a href="savedList">保存済み</a></li>
+                    <li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                    </li>
+                </ul>
+            </div>
             @else
                 <a class="account-link" href="{{ route('register') }}">会員登録</a>
                 <a class="account-link" href="{{ route('login') }}">ログイン</a>
@@ -278,15 +274,12 @@
         </div>
     </header>
     <div class="main-body">
-        <div class="search-info">
-            <h2>「{{ ($keyword) ? $keyword : "近く" }}」で見つかったお店</h2>
-            <h2>{{ $count }}件</h2>
-        </div>
+        <h2 class="page-title">保存済みのレストラン</h2>
         <div class="search-results">
             @if($restaurants)
                 @foreach($restaurants as $restaurant)
                     <article class="restaurant-card">
-                        <a href="{{ route('restaurant_detail', ['id' => $restaurant['id'], 'keyword' => $keyword, 'range' => $range]) }}" style="text-decoration: none; color: inherit;">
+                        <a href="{{ route('restaurant_detail', ['id' => $restaurant['id']]) }}" style="text-decoration: none; color: inherit;">
                             <img src="{{ $restaurant['photo']['pc']['l'] }}" alt="{{ $restaurant['name'] }} Image">
                             <h2>{{ $restaurant['name'] }}</h2>
                             <div class="detail-area">
@@ -316,13 +309,6 @@
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
     </footer>
-    <script>
-        const initialRange = "{{ $range }}";
-        window.onload = function() {
-            const rangeSelect = document.getElementById('range');
-            rangeSelect.value = initialRange;
-        };
-    </script>
     <script src="{{ asset('../resources/js/toggle_account.js') }}"></script>
     <script src="{{ asset('../resources/js/geolocation_header.js') }}"></script>
 </body>

@@ -109,7 +109,9 @@
             background-color: #ff914d;
             color: #fff;
             text-decoration: none;
-            border-radius: 5px;
+            border-radius: 10px;
+            line-height: 20px;
+            white-space: nowrap;
         }
         .dropdown-menu {
             position: absolute;
@@ -177,12 +179,12 @@
             <div class="dropdown">
                 <a class="user" onclick="toggleDropdown('userDropdown')"> {{ Auth::user()->name }} さん</a>
                 <ul id="userDropdown" class="dropdown-menu" style="display: none;">
-                    <li><a href="#">保存済み</a></li>
+                    <li><a href="savedList">保存済み</a></li>
                     <li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
                         </form>
-                        <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
                     </li>
                 </ul>
             </div>

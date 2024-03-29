@@ -24,4 +24,9 @@ class Favorite extends Model
             Favorite::create(['restaurant_id' => $restaurantId, 'user_id' => $user_id]);
         }
     }
+
+    public static function getFavoriteRestaurantIds($user_id)
+    {
+        return self::where('user_id', $user_id)->pluck('restaurant_id');
+    }
 }

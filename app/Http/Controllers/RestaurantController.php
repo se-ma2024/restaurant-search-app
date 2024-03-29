@@ -8,7 +8,7 @@ use App\Http\Controllers\RestaurantController;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use App\Models\Favorite;
-
+use Illuminate\Support\Facades\Auth;
 
 class RestaurantController extends Controller
 {
@@ -115,5 +115,28 @@ class RestaurantController extends Controller
         Favorite::toggleFavorite($restaurantId, $user_id);
 
         return back();
+    }
+
+    public function savedList(Request $request)
+    {
+        $user_id = Auth::user()->id;
+        $savedRestaurants = Favorite::getFavoriteRestaurantIds($user_id);
+
+        $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
+        $apiKey = config('services.hotpepper.api_key');
+        $params = [
+            'key' => $apiKey,
+            'id' => $savedRestaurants->implode(','),
+            'format' => 'json',
+        ];
+        $response = Http::get($apiEndpoint, $params);
+        $restaurantsData = $response->json()['results']['shop'];
+        Paginator::useBootstrap();
+        $perPage = 10;
+        $currentPage = $request->input('page', 1);
+        $pagedData = array_slice($restaurantsData, ($currentPage - 1) * $perPage, $perPage);
+        $restaurants = new LengthAwarePaginator($pagedData, count($restaurantsData), $perPage, $currentPage);
+
+        return view('saved_list', ['restaurants' => $restaurants]);
     }
 };
