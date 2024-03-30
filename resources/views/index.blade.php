@@ -11,7 +11,7 @@
 <body>
     <header>
         <a href="{{ route('index') }}" style="text-decoration: none; color: inherit;">
-            <h1>レストラン検索</h1>
+            <h1>グルポンッ!!</h1>
         </a>
         <div class="account">
             @if(Auth::check())
