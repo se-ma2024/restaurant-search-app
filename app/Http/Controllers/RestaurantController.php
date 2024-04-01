@@ -90,7 +90,7 @@ class RestaurantController extends Controller
         }
     }
 
-    public function show($id, Request $request)
+    public function show($restaurantId, Request $request)
     {
         try {
             $keyword = $request->input('keyword');
@@ -99,7 +99,7 @@ class RestaurantController extends Controller
             $apiKey = config('services.hotpepper.api_key');
             $params = [
                 'key' => $apiKey,
-                'id' => $id,
+                'id' => $restaurantId,
                 'format' => 'json',
             ];
             $response = Http::get($apiEndpoint, $params);
@@ -113,8 +113,7 @@ class RestaurantController extends Controller
     public function saved(Request $request, $restaurantId, $user_id)
     {
         Favorite::toggleFavorite($restaurantId, $user_id);
-
-        return back();
+         return back();
     }
 
     public function savedList(Request $request)
