@@ -40,7 +40,7 @@
                 <label for="keyword">お探しのキーワード</label>
                 <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン" required>
             </div>                
-            <button type="submit" class="search-button">キーワード検索</button>
+            <button type="submit" class="search-button" id="keyword-button">キーワード検索</button>
         </form>
         <hr>
         <form action="{{ route('search') }}" method="get" id="search-form" class="search-area">
@@ -61,7 +61,7 @@
                     <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン">
                 </div>
             </div>
-            <button type="submit" class="search-button">近くを検索</button>
+            <button type="submit" class="search-button" id="search-button">近くを検索</button>
         </form>
         <hr>
         <form action="{{ route('pickUp') }}" method="get" id="pickUp-form" class="search-area">
@@ -73,7 +73,7 @@
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
     </footer>
     <script src="{{ asset('../resources/js/toggleAccount.js') }}"></script>
-    <script src="{{ asset('../resources/js/pickUpTippy.js') }}"></script>
+    <script src="{{ asset('../resources/js/indexTippy.js') }}"></script>
     <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
 </body>
 </html>
