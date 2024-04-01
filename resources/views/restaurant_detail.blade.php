@@ -11,7 +11,14 @@
         <a href="{{ route('index') }}" style="text-decoration: none; color: inherit;">
             <h1>グルポンッ!!</h1>
         </a>
-        <form action="{{ route('search') }}" method="get" id="search-form" class="search-area">
+        <form action="{{ route('keyword_search') }}" method="get" id="search-form" class="search-area">
+            @csrf
+            <div class="input-keyword">
+                <input type="text" id="keyword" name="keyword" value="{{ $keyword }}" required>
+            </div>                
+            <button type="submit" class="search-button">キーワード検索</button>
+        </form>
+        <form action="{{ route('search') }}" method="get" class="search-area">
             @csrf
             <select id="range" name="range">
                 <option value="1">300m</option>
@@ -21,7 +28,7 @@
                 <option value="5">3000m</option>
             </select>
             <input type="text" id="keyword" name="keyword" value="{{ $keyword }}">
-            <button type="submit" class="search-button">検索</button>
+            <button type="submit" class="search-button">近くを検索</button>
         </form>
         <div class="account">
         @if(Auth::check())

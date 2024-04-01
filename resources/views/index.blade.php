@@ -34,11 +34,11 @@
         </div>
     </header>
     <div class="form-area">
-        <form action="{{ route('keyword_search') }}" method="get" id="search-form" class="search-area">
+        <form action="{{ route('keyword_search') }}" method="get" class="search-area">
             @csrf
             <div class="input-keyword">
                 <label for="keyword">お探しのキーワード</label>
-                <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン">
+                <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン" required>
             </div>                
             <button type="submit" class="search-button">キーワード検索</button>
         </form>

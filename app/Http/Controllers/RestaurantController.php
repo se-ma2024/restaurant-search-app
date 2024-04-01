@@ -162,7 +162,8 @@ class RestaurantController extends Controller
         try {
             $user_id = Auth::user()->id;
             $savedRestaurants = Favorite::getFavoriteRestaurantIds($user_id);
-
+            $keyword = $request->input('keyword');
+            $range = $request->input('range');
             $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
             $apiKey = config('services.hotpepper.api_key');
             $params = [
@@ -178,7 +179,7 @@ class RestaurantController extends Controller
             $pagedData = array_slice($restaurantsData, ($currentPage - 1) * $perPage, $perPage);
             $restaurants = new LengthAwarePaginator($pagedData, count($restaurantsData), $perPage, $currentPage);
 
-            return view('saved_list', ['restaurants' => $restaurants]);
+            return view('saved_list', ['restaurants' => $restaurants, 'keyword' => $keyword, 'range' => $range]);
         } catch (\Exception $e) {
             \Log::error('Error fetching favorite restaurant: ' . $e->getMessage());
         }
