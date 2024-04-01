@@ -73,7 +73,7 @@
             @endif
         </div>
         <div class="pagination">
-            {{ $restaurants->withPath('/restaurant-search-app/public/search')->withQueryString()->links() }}
+        {{ $restaurants->withPath('/restaurant-search-app/public/savedList')->withQueryString()->links() }}
         </div>
     </div>
     <footer>

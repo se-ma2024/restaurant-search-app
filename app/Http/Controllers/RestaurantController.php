@@ -16,7 +16,48 @@ class RestaurantController extends Controller
     {
         return view('index');
     }
-    
+
+    public function keyword_search(Request $request)
+    {
+        try {
+            $keyword = $request->input('keyword');
+            $range = $request->input('range');
+            $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
+            $api_key = config('services.hotpepper.api_key');
+            $params = [
+                'key' => $api_key,
+                'keyword' => $keyword,
+                'range' => $range,
+                'count' => 100,
+                'format' => "json",
+            ];
+            $response = Http::get($apiEndpoint, $params);
+            $restaurantsData = $response->json()['results']['shop'];
+            Paginator::useBootstrap();
+            $perPage = 10;
+            $currentPage = $request->input('page', 1);
+            $pagedData = array_slice($restaurantsData, ($currentPage - 1) * $perPage, $perPage);
+            $restaurants = new LengthAwarePaginator($pagedData, count($restaurantsData), $perPage, $currentPage);
+
+            return view('search_results', [
+                'keyword' => $keyword,
+                'range' => $range,
+                'restaurants' => $restaurants,
+                'count' => count($restaurantsData),
+                'error' => null,
+            ]);
+        } catch (\Exception $e) {
+            \Log::error('Error fetching restaurant data: ' . $e->getMessage());
+
+            return view('search_results', [
+                'keyword' => $keyword,
+                'range' => $range,
+                'restaurants' => null,
+                'error' => $e->getMessage(),
+            ]);
+        }
+    }   
+
     public function search(Request $request)
     {
         try {

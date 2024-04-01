@@ -34,6 +34,15 @@
         </div>
     </header>
     <div class="form-area">
+        <form action="{{ route('keyword_search') }}" method="get" id="search-form" class="search-area">
+            @csrf
+            <div class="input-keyword">
+                <label for="keyword">お探しのキーワード</label>
+                <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン">
+            </div>                
+            <button type="submit" class="search-button">キーワード検索</button>
+        </form>
+        <hr>
         <form action="{{ route('search') }}" method="get" id="search-form" class="search-area">
             @csrf
             <div class="input-item">
@@ -52,7 +61,7 @@
                     <input type="text" id="keyword" name="keyword" placeholder="例）ラーメン">
                 </div>
             </div>
-            <button type="submit" class="search-button">検索</button>
+            <button type="submit" class="search-button">近くを検索</button>
         </form>
         <hr>
         <form action="{{ route('pickUp') }}" method="get" id="pickUp-form" class="search-area">
