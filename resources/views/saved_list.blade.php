@@ -28,7 +28,7 @@
             <div class="dropdown">
                 <a class="user" onclick="toggleDropdown('userDropdown')"> {{ Auth::user()->name }} さん</a>
                 <ul id="userDropdown" class="dropdown-menu" style="display: none;">
-                    <li><a href="savedList">保存済み</a></li>
+                    <li><a href="{{ route('saved_list') }}">保存済み</a></li>
                     <li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                             @csrf
