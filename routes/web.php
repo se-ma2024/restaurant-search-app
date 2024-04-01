@@ -19,7 +19,7 @@ use App\Http\Controllers\RestaurantController;
 Route::get('/', [RestaurantController::class, 'index'])->name('index');
 Route::get('/search', [RestaurantController::class, 'search'])->name('search');
 Route::get('/pickUp', [RestaurantController::class, 'pickUp'])->name('pickUp');
-Route::get('/restaurants/{id}', [RestaurantController::class, 'show'])->name('restaurant_detail');
+Route::get('/restaurants/{restaurantId}', [RestaurantController::class, 'show'])->name('restaurant_detail');
 Route::get('/savedList', [RestaurantController::class, 'savedList'])->name('saved_list');
 Route::post('/saved/{restaurantId}/{user_id}', [RestaurantController::class, 'saved'])->name('saved');
 Auth::routes();

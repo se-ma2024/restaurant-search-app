@@ -52,7 +52,7 @@
             @if($restaurants)
                 @foreach($restaurants as $restaurant)
                     <article class="restaurant-card">
-                        <a href="{{ route('restaurant_detail', ['id' => $restaurant['id'], 'keyword' => $keyword, 'range' => $range]) }}" style="text-decoration: none; color: inherit;">
+                        <a href="{{ route('restaurant_detail', ['restaurantId' => $restaurant['id'], 'keyword' => $keyword, 'range' => $range]) }}" style="text-decoration: none; color: inherit;">
                             <img src="{{ $restaurant['photo']['pc']['l'] }}" alt="{{ $restaurant['name'] }} Image">
                             <h2>{{ $restaurant['name'] }}</h2>
                             <div class="detail-area">
