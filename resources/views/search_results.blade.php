@@ -96,7 +96,7 @@
             rangeSelect.value = initialRange;
         };
     </script>
-    <script src="{{ asset('../resources/js/toggle_account.js') }}"></script>
-    <script src="{{ asset('../resources/js/geolocation_header.js') }}"></script>
+    <script src="{{ asset('../resources/js/toggleAccount.js') }}"></script>
+    <script src="{{ asset('../resources/js/geolocationHeader.js') }}"></script>
 </body>
 </html>

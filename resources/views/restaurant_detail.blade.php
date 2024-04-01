@@ -129,8 +129,6 @@
             const rangeSelect = document.getElementById('range');
             rangeSelect.value = initialRange;
         };
-
-
         async function initMap() {
             const mapElement = document.getElementById("map");
             const restaurantLat = {{ $restaurant['lat'] }};
@@ -156,11 +154,10 @@
             });
         }
     </script>
-    <script src="{{ asset('../resources/js/toggle_account.js') }}"></script>
-    <script src="{{ asset('../resources/js/toggle_detail.js') }}"></script>
-    <script src="{{ asset('../resources/js/geolocation_header.js') }}"></script>
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key={{ config('services.googlemap.api_key') }}&callback=initMap">
-    </script>
+    <script src="{{ asset('../resources/js/toggleAccount.js') }}"></script>
+    <script src="{{ asset('../resources/js/toggleDetail.js') }}"></script>
+    <script src="{{ asset('../resources/js/rangeDelivery.js') }}"></script>
+    <script src="{{ asset('../resources/js/geolocationHeader.js') }}"></script>
+    <script async src="https://maps.googleapis.com/maps/api/js?key={{ config('services.googlemap.api_key') }}&callback=initMap"></script>
 </body>
 </html>

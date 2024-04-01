@@ -31,19 +31,19 @@
             <button type="submit" class="search-button">近くを検索</button>
         </form>
         <div class="account">
-        @if(Auth::check())
-            <div class="dropdown">
-                <a class="user" onclick="toggleDropdown('userDropdown')"> {{ Auth::user()->name }} さん</a>
-                <ul id="userDropdown" class="dropdown-menu" style="display: none;">
-                    <li><a href="{{ route('saved_list') }}">保存済み</a></li>
-                    <li>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                        <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
-                    </li>
-                </ul>
-            </div>
+            @if(Auth::check())
+                <div class="dropdown">
+                    <a class="user" onclick="toggleDropdown('userDropdown')"> {{ Auth::user()->name }} さん</a>
+                    <ul id="userDropdown" class="dropdown-menu" style="display: none;">
+                        <li><a href="{{ route('saved_list') }}">保存済み</a></li>
+                        <li>
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                            <a onclick="event.preventDefault(); document.getElementById('logout-form').submit();">ログアウト</a>
+                        </li>
+                    </ul>
+                </div>
             @else
                 <a class="account-link" href="{{ route('register') }}">会員登録</a>
                 <a class="account-link" href="{{ route('login') }}">ログイン</a>
@@ -86,7 +86,7 @@
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
     </footer>
-    <script src="{{ asset('../resources/js/toggle_account.js') }}"></script>
-    <script src="{{ asset('../resources/js/geolocation_header.js') }}"></script>
+    <script src="{{ asset('../resources/js/toggleAccount.js') }}"></script>
+    <script src="{{ asset('../resources/js/geolocationHeader.js') }}"></script>
 </body>
 </html>

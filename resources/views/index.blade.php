@@ -72,8 +72,8 @@
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>
     </footer>
-    <script src="{{ asset('../resources/js/toggle_account.js') }}"></script>
-    <script src="{{ asset('../resources/js/tippy.js') }}"></script>
+    <script src="{{ asset('../resources/js/toggleAccount.js') }}"></script>
+    <script src="{{ asset('../resources/js/pickUpTippy.js') }}"></script>
     <script src="{{ asset('../resources/js/geolocation.js') }}"></script>
 </body>
 </html>
