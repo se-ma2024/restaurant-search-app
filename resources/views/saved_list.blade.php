@@ -73,15 +73,14 @@
                         </a>
                     </article>
                 @endforeach
-            @elseif($error)
-                <p>{{ $error }}</p>
+                <div class="pagination">
+                    {{ $restaurants->withPath('/restaurant-search-app/public/savedList')->withQueryString()->links() }}
+                </div>
             @else
-                <p>お店が見つかりませんでした。</p>
+                <p>保存済みのレストランがありません</p>
             @endif
         </div>
-        <div class="pagination">
-        {{ $restaurants->withPath('/restaurant-search-app/public/savedList')->withQueryString()->links() }}
-        </div>
+        
     </div>
     <footer>
         &copy; 2024 Delicious Restaurants | Powered by <a href="http://webservice.recruit.co.jp/">ホットペッパーグルメ Webサービス</a>

@@ -182,6 +182,8 @@ class RestaurantController extends Controller
             return view('saved_list', ['restaurants' => $restaurants, 'keyword' => $keyword, 'range' => $range]);
         } catch (\Exception $e) {
             \Log::error('Error fetching favorite restaurant: ' . $e->getMessage());
+
+            return view('saved_list', ['restaurants' => null, 'keyword' => $keyword, 'range' => $range, 'error' => $e->getMessage(),]);
         }
     }
 };
