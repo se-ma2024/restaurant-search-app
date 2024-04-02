@@ -125,7 +125,11 @@ class RestaurantController extends Controller
             $restaurants = $response->json()['results']['shop'];
             $randomIndex = array_rand($restaurants);
             $randomRestaurant = $restaurants[$randomIndex];
-            return view('restaurant_detail', ['restaurant' => $randomRestaurant, 'keyword' => null, 'range' => 3]);
+            return view('restaurant_detail', [
+                'restaurant' => $randomRestaurant,
+                'keyword' => null,
+                'range' => 3
+            ]);
         } catch (\Exception $e) {
             \Log::error('Error picking up restaurant: ' . $e->getMessage());
         }
@@ -145,7 +149,11 @@ class RestaurantController extends Controller
             ];
             $response = Http::get($apiEndpoint, $params);
             $restaurant = $response->json()['results']['shop'][0];
-            return view('restaurant_detail', ['restaurant' => $restaurant, 'keyword' => $keyword, 'range' => $range]);
+            return view('restaurant_detail', [
+                'restaurant' => $restaurant,
+                'keyword' => $keyword,
+                'range' => $range
+            ]);
         } catch (\Exception $e) {
             \Log::error('Error fetching restaurant details: ' . $e->getMessage());
         }
@@ -160,30 +168,45 @@ class RestaurantController extends Controller
     public function savedList(Request $request)
     {
         try {
+            Paginator::useBootstrap();
             $user_id = Auth::user()->id;
-            $savedRestaurants = Favorite::getFavoriteRestaurantIds($user_id);
+            $savedRestaurants = Favorite::getFavoriteRestaurantIds($user_id)->toArray();
             $keyword = $request->input('keyword');
             $range = $request->input('range');
             $apiEndpoint = 'http://webservice.recruit.co.jp/hotpepper/gourmet/v1/';
             $apiKey = config('services.hotpepper.api_key');
-            $params = [
-                'key' => $apiKey,
-                'id' => $savedRestaurants->implode(','),
-                'format' => 'json',
-            ];
-            $response = Http::get($apiEndpoint, $params);
-            $restaurantsData = $response->json()['results']['shop'];
-            Paginator::useBootstrap();
             $perPage = 10;
+            $restaurants = [];
+            $subArrays = array_chunk($savedRestaurants, $perPage);
+            foreach ($subArrays as $subArray) {
+                $params = [
+                    'key' => $apiKey,
+                    'id' => implode(',', $subArray),
+                    'format' => 'json',
+                ];
+                $response = Http::get($apiEndpoint, $params);
+                $restaurantsData = $response->json()['results']['shop'];
+                $restaurants = array_merge($restaurants, $restaurantsData);
+            }
             $currentPage = $request->input('page', 1);
-            $pagedData = array_slice($restaurantsData, ($currentPage - 1) * $perPage, $perPage);
-            $restaurants = new LengthAwarePaginator($pagedData, count($restaurantsData), $perPage, $currentPage);
+            $total = count($restaurants);
+            $pagedData = array_slice($restaurants, ($currentPage - 1) * $perPage, $perPage);
+            $restaurantsForPage = new LengthAwarePaginator($pagedData, $total, $perPage, $currentPage);
 
-            return view('saved_list', ['restaurants' => $restaurants, 'keyword' => $keyword, 'range' => $range]);
+            return view('saved_list', [
+                'restaurants' => $restaurantsForPage,
+                'keyword' => $keyword,
+                'range' => $range
+            ]);
         } catch (\Exception $e) {
             \Log::error('Error fetching favorite restaurant: ' . $e->getMessage());
 
-            return view('saved_list', ['restaurants' => null, 'keyword' => $keyword, 'range' => $range, 'error' => $e->getMessage(),]);
+            return view('saved_list', [
+                'restaurants' => null,
+                'keyword' => $keyword,
+                'range' => $range,
+                'error' => $e->getMessage()
+            ]);
         }
     }
 };
