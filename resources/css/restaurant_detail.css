@@ -162,7 +162,6 @@ hr {
 .detail-title {
     margin-left: 20px;
     margin-bottom: 5px;
-
 }
 .detail {
     margin-top: 5px;
@@ -171,8 +170,7 @@ hr {
 img {
     flex: 1;
     border-radius: 10px;
-    border: 5px solid #FFF;
-    box-shadow: 20px 20px 0 #ffbd59;
+    border: 5px solid #fff;
     margin-right: 20px;
 }
 .back-button {
@@ -209,7 +207,7 @@ img {
 }
 #toggle-button {
     padding: 10px 20px;
-    font-size:20px;
+    font-size: 20px;
     font-weight: bold;
     background-color: transparent;
     color: #000;
