@@ -122,7 +122,7 @@
         <hr>
         <div id="map"></div>
     </div>
-    <button class="back-button" onclick="window.history.back()">戻る</button>
+    <button class="back-button" onclick="goBack()">戻る</button>
     <script>
         const initialRange = "{{ $range }}";
         window.onload = function() {
@@ -152,6 +152,15 @@
                 infoWindow.setContent(marker.getTitle());
                 infoWindow.open(map, marker);
             });
+        }
+        function goBack() {
+            var currentDirectory = window.location.pathname;
+            console.log(currentDirectory);
+            if (currentDirectory.startsWith('/restaurant-search-app/public/saved/')) {
+                window.location.href = '/restaurant-search-app/public/';
+            } else {
+                window.history.back();
+            }
         }
     </script>
     <script src="{{ asset('../resources/js/toggleAccount.js') }}"></script>

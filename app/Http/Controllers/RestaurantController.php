@@ -125,6 +125,7 @@ class RestaurantController extends Controller
             $restaurants = $response->json()['results']['shop'];
             $randomIndex = array_rand($restaurants);
             $randomRestaurant = $restaurants[$randomIndex];
+            session(['randomRestaurant' => $randomRestaurant]);
             return view('restaurant_detail', [
                 'restaurant' => $randomRestaurant,
                 'keyword' => null,
@@ -162,7 +163,12 @@ class RestaurantController extends Controller
     public function saved(Request $request, $restaurantId, $user_id)
     {
         Favorite::toggleFavorite($restaurantId, $user_id);
-         return back();
+        $randomRestaurant = session('randomRestaurant');
+        return view('restaurant_detail', [
+            'restaurant' => $randomRestaurant,
+            'keyword' => null,
+            'range' => 3
+        ]);
     }
 
     public function savedList(Request $request)
