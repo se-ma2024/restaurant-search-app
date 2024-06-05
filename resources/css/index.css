@@ -138,11 +138,11 @@ hr {
     background-color: #ffbd59;
     border: none;
 }
-.tippy-box[data-theme='my-custom-theme'] {
+.tippy-box[data-theme="my-custom-theme"] {
     background-color: #fff;
     color: #000;
 }
-.tippy-box[data-theme='my-custom-theme'] .tippy-arrow {
+.tippy-box[data-theme="my-custom-theme"] .tippy-arrow {
     color: #fff;
 }
 footer {
@@ -157,4 +157,129 @@ footer {
 footer a {
     color: #007bff;
     text-decoration: none;
+}
+
+.gatyaContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.capsuleBoxHead {
+    width: 290px;
+    height: 30px;
+    border: 2px solid #000000;
+    background-color: #ff914d;
+    border-radius: 10px;
+}
+
+.capsuleBoxBody {
+    width: 280px;
+    height: 300px;
+    border: 2px solid #000000;
+    background-color: #ffffff;
+    border-radius: 10px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.capsuleBoxBody span {
+    width: 220px;
+    height: 250px;
+    background-color: #eeeeee;
+    padding: 5px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.gacha-machine {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    background-color: #ff914d;
+    border: 2px solid #000000;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 20px;
+    overflow: hidden;
+}
+
+.handle-container {
+    position: absolute;
+    top: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.handle {
+    width: 100px;
+    height: 20px;
+    background-color: #eeeeee;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    position: absolute;
+    cursor: pointer;
+    transition: transform 1s ease-in-out;
+    transform: rotate(0deg);
+    z-index: 2;
+}
+
+.handle::after {
+    content: "";
+    width: 100px;
+    height: 100px;
+    background-image: url("handle.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    transform: rotate(-90deg);
+    z-index: 1;
+}
+
+.circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #333;
+    position: absolute;
+    background-color: #ffffff;
+}
+
+.exit {
+    width: 80px;
+    height: 150px;
+    background-color: #1d1d1d;
+    position: absolute;
+    top: calc(100% - 75px);
+    left: calc(50% - 40px);
+    z-index: 2;
+    border-radius: 10px;
+}
+
+#rotateButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+}
+
+#rotateButton:hover {
+    background-color: #45a049;
 }
