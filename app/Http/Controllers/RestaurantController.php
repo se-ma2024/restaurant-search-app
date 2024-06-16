@@ -125,7 +125,7 @@ class RestaurantController extends Controller
             $restaurants = $response->json()['results']['shop'];
             $randomIndex = array_rand($restaurants);
             $randomRestaurant = $restaurants[$randomIndex];
-            session(['randomRestaurant' => $randomRestaurant]);
+            session(['saveRestaurant' => $randomRestaurant]);
             return view('restaurant_detail', [
                 'restaurant' => $randomRestaurant,
                 'keyword' => null,
@@ -150,6 +150,7 @@ class RestaurantController extends Controller
             ];
             $response = Http::get($apiEndpoint, $params);
             $restaurant = $response->json()['results']['shop'][0];
+            session(['saveRestaurant' => $restaurant]);
             return view('restaurant_detail', [
                 'restaurant' => $restaurant,
                 'keyword' => $keyword,
@@ -163,9 +164,9 @@ class RestaurantController extends Controller
     public function saved(Request $request, $restaurantId, $user_id)
     {
         Favorite::toggleFavorite($restaurantId, $user_id);
-        $randomRestaurant = session('randomRestaurant');
+        $saveRestaurant = session('saveRestaurant');
         return view('restaurant_detail', [
-            'restaurant' => $randomRestaurant,
+            'restaurant' => $saveRestaurant,
             'keyword' => null,
             'range' => 3
         ]);
